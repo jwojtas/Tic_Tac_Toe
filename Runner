@@ -1,0 +1,85 @@
+
+import one.Player;
+import one.Board;
+
+import java.util.Scanner;
+
+public class Runner {
+
+	public static void main(String[] args) {
+		Board board = new Board();
+		
+		String winner = playGame(board);
+		
+		printBoard(board);
+		
+		printWinner(winner);
+	}
+	
+	private static String playGame(Board board) {
+		   Player player1 = new Player('X', board);
+    Player player2 = new Player('O', board);
+    Scanner scn = new Scanner(System.in);
+    Player turnPlayer;
+    int count = 0;
+    int play;
+    boolean playing = true;
+    boolean won = false;
+    String win = "tie";
+    while(playing){
+        printBoard(board);
+        count++;
+        if(count%2 ==1)
+        turnPlayer = player1;
+        else
+        turnPlayer = player2;
+        System.out.println("[1][2][3] \n [4][5][6] \n [7][8][9] "+
+        turnPlayer.getName()+ " Make a move by entering 1-9");
+        play = scn.nextInt();
+        won = turnPlayer.makePlay(Player.cells[play-1]);
+        if(won){
+            win = turnPlayer.getName();
+            playing = false;
+        }
+        if(count == 9)
+        playing = false;
+    }
+    return win;
+
+	}
+
+	
+	private static void printBoard(Board board) {
+		
+		
+		for (int row = 0; row < board.getRowCount(); row++) {
+			for (int col = 0; col < board.getColumnCount(); col++) {
+				
+				
+				System.out.print(" " + board.getCellContents(row, col));
+				
+				if (col < board.getColumnCount() - 1) {
+					System.out.print(" |");
+				}
+			}
+			
+			
+			if (row < board.getRowCount() - 1) {
+				System.out.println();
+				System.out.println("------------");
+			}
+		}
+		
+	
+		System.out.println();
+	}
+	
+	
+	private static void printWinner(String win) {
+		if(win.equals("tie"))
+		System.out.println("It's a tie!");
+		else
+		System.out.println(win + " is the winner!");
+	}
+
+}
