@@ -1,0 +1,45 @@
+  package one;
+import java.util.Scanner;
+public class Player {
+
+	public static int[] cells = { Board.BOTTOM_LEFT, Board.BOTTOM_CENTER, Board.BOTTOM_RIGHT,
+		Board.MIDDLE_LEFT, Board.MIDDLE_CENTER, Board.MIDDLE_RIGHT,
+		Board.TOP_LEFT, Board.TOP_CENTER, Board.TOP_RIGHT };
+
+	/** The symbol of this player. Typically either 'X' or 'O'. */
+	private char symbol;
+	/** The board this player is playing on. */
+	private Board board;
+
+	
+	public Player(char symbol, Board board) {
+		this.symbol = symbol;
+		this.board = board;
+	}
+
+	public boolean makePlay(int cell) {
+		
+		while (true) {
+			
+			
+			if (board.getCellContents(cell) != Board.EMPTY) {
+				
+				
+				Scanner in = new Scanner(System.in);
+				System.out.print("Must choose an empty cell. Choose another: ");
+				cell = cells[in.nextInt() - 1];
+				
+			
+			} else {
+				break;
+			}
+		}
+		
+		return board.mark(cell, symbol);
+	}
+
+	public String getName() {
+		return "Player " + symbol;
+	}
+
+}
